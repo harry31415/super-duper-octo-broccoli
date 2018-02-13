@@ -1,0 +1,26 @@
+{
+  "name": "backcommu",
+  "version": "1.0.0",
+  "description": "communication for backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node .",
+    "prod": "NODE_ENV=production npm start",
+    "dev": "NODE_ENV=development node_modules/nodemon/bin/nodemon.js ."
+  },
+  "author": "Harry Sidiropoulos",
+  "license": "ISC",
+  "dependencies": {
+    "archiver": "^2.1.1",
+    "chokidar": "^2.0.0",
+    "dateformat": "^3.0.2",
+    "fs": "0.0.1-security",
+    "mongodb": "^3.0.1",
+    "nodemon": "^1.14.12",
+    "python-shell": "^0.4.0",
+    "socket.io": "^2.0.4",
+    "socket.io-stream": "^0.9.1",
+    "winston": "^2.4.0"
+  }
+}
