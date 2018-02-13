@@ -65,4 +65,5 @@ typings/
 *.ppp
 *.log
 *.zip
-client-test/
+downloads/
+results/
