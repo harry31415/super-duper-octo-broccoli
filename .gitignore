@@ -66,4 +66,5 @@ typings/
 *.log
 *.zip
 downloads/
+Results/
 results/
