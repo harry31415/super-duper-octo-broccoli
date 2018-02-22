@@ -1,3 +1,11 @@
+/*
+ *
+ * Signals:
+ * scriptPY : the input script  stream
+ * outPy: the output send to the fronend
+ * stopScript: the signal from frontend to stop execution
+ */
+
 // Get configuration vars
 const config = require('../config')
 const winston = require('winston');
@@ -11,6 +19,7 @@ const dateFormat = require('dateformat');
 const ss = require('socket.io-stream');
 const path = require('path');
 const fs = require('fs');
+const { spawn } = require('child_process');
 //const MongoClient = require('mongodb').MongoClient;
 //const assert = require('assert');
 
@@ -40,6 +49,29 @@ io.on('connection', function(socket) {
         // back)
         downloadStream(stream,config.scriptpath+'/'+filename, socket, runExperiment);
     });
+
+    // Stop script (when something goes wrong)
+    socket.on('stopScript', function(msg) {
+        winston.debug('StopScript signal received');
+        const killl= spawn('pkill', ['-9', 'python']);
+
+        killl.on('close',(code) => {
+            winston.debug(`child process exited with code ${code}`);
+            socket.emit('outPy', "Script killed!");
+        });
+
+    });
+
+    setTimeout(function(){
+        const killl= spawn('pkill', ['-9', 'python']);
+        killl.on('close',(code) => {
+            winston.debug(`child process exited with code ${code}`);
+            socket.emit('outPy','Script Killed because it did not finish after '+config.killTimer/1000+' sec');
+        });
+        
+    }, config.killTimer);
+
+
 
      watcher
         .on('add', function(path) {
